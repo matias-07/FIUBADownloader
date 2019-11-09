@@ -18,8 +18,17 @@ my $parsed = HTML::Parse::parse_html($content);
 
 my @media_links = map { $_->[0] } grep { substr($_->[0], 0, 7) eq "/_media" } @{$parsed->extract_links()};
 
+my $downloads = scalar(@media_links);
+
 foreach my $link (@media_links) {
 	my $filename = substr($link, rindex($link, ":") + 1);
+	if (-e $filename) {
+		$downloads--;
+		next;
+	}
 	print "Descargando $filename...\n";
 	getstore($url . $link, $filename);
 }
+
+my $message = ($downloads > 0 ? "\n" : "") . "Cantidad de archivos descargados: $downloads\n";
+print $message;
