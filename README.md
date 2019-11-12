@@ -1,7 +1,5 @@
 # FIUBADownloader
 
-Todos los apuntes, parciales y finales de una materia, ejecutando sólo una línea.
-
 En la terminal, ejecutar:
 ```
 perl downloader.pl CODIGO_MATERIA
