@@ -24,7 +24,14 @@ my $downloads = scalar(@media_links);
 mkdir($dir) unless ($downloads == 0);
 
 foreach my $link (@media_links) {
-	my $filename = $dir . "/" . substr($link, rindex($link, ":") + 1);
+	my $path = $dir;
+	if ($link =~ /parcial/ or $link =~ /recu/ or $link =~ /diferido/) {
+		$path .= "/parciales";
+	} elsif ($link =~ /final/ or $link =~ /integrador/ or $link =~ /coloquio/) {
+		$path .= "/finales";
+	}
+	mkdir($path) unless (-e $path);
+	my $filename = $path . "/" . substr($link, rindex($link, ":") + 1);
 	if (-e $filename) {
 		$downloads--;
 		next;
